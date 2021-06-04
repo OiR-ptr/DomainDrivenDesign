@@ -14,7 +14,7 @@
       "clientBaseClass": null,
       "configurationClass": null,
       "generateClientClasses": true,
-      "generateClientInterfaces": false,
+      "generateClientInterfaces": true,
       "clientBaseInterface": null,
       "injectHttpClient": false,
       "disposeHttpClient": true,
@@ -93,7 +93,7 @@
       "enumNameGeneratorType": null,
       "serviceHost": null,
       "serviceSchemes": null,
-      "output": "NSwag\\ApiClients.cs",
+      "output": "NSwag/ApiClients.cs",
       "newLineBehavior": "Auto"
     }
   }

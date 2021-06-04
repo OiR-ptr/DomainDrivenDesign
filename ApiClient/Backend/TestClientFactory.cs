@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.Extensions.Options;
+using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -7,11 +9,16 @@ namespace ApiClient.Backend
 {
     public class TestClientFactory
     {
-        public async Task<int> Test()
+        protected readonly HttpClient _httpClient;
+
+        public TestClientFactory(HttpClient httpClient)
         {
-            var client = new WeatherForecastClient();
-            var weather = await client.GetAsync();
-            return weather.Count;
+            _httpClient = httpClient;
+        }
+
+        public IWeatherForecastClient CreateWeatherForecast()
+        {
+            return new WeatherForecastClient();
         }
     }
 }

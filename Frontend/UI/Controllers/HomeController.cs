@@ -1,29 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using ApiClient.Backend;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using ApiClient.Backend;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using UI.Models;
+using UI.ViewModels.Home;
 
 namespace UI.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly TestClientFactory _factory;
+
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(TestClientFactory factory, ILogger<HomeController> _logger)
         {
-            _logger = logger;
+            _factory = factory;
         }
 
         public async Task<IActionResult> Index()
         {
-            var factory = new TestClientFactory();
-            await factory.Test();
-            return View();
+            var weatherClient = _factory.CreateWeatherForecast();
+            var response = await weatherClient.GetAsync();
+            var viewModel = new IndexViewModel
+            {
+                Summaries = response.Select(item => item.Summary),
+            };
+            return View(viewModel);
         }
 
         public IActionResult Privacy()
